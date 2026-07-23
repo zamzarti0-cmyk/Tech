@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:holistq/features/auth/presentation/auth_router.dart';
 import 'package:holistq/features/home/presentation/home_screen.dart';
 import 'package:holistq/features/home/presentation/home_shell.dart';
 import 'package:holistq/features/fitness/presentation/fitness_screen.dart';
@@ -9,8 +10,9 @@ import 'package:holistq/features/profile/presentation/profile_screen.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
-    initialLocation: '/home',
+    initialLocation: '/splash',
     routes: [
+      ...authRoutes,
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return HomeShell(navigationShell: navigationShell);
