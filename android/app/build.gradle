@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.holistq"
+    namespace = "com.holistq.app"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
@@ -23,7 +23,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.holistq"
+        applicationId "com.holistq.app"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
@@ -43,3 +43,5 @@ flutter {
 
 dependencies {
 }
+
+apply plugin: 'com.google.gms.google-services'
