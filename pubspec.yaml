@@ -1,0 +1,121 @@
+name: holistq
+description: "HolistQ - AI-powered health, fitness, nutrition, and wellness platform"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.2.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Firebase
+  firebase_core: ^2.28.0
+  firebase_auth: ^4.18.0
+  cloud_firestore: ^4.16.0
+  firebase_storage: ^11.7.0
+  firebase_messaging: ^14.8.0
+  firebase_analytics: ^10.8.0
+  firebase_crashlytics: ^3.4.0
+  firebase_performance: ^0.9.5+4
+  firebase_remote_config: ^4.4.0
+  firebase_app_check: ^0.2.1+4
+
+  # State Management (Riverpod - Best for scalability and testability)
+  riverpod: ^2.5.1
+  flutter_riverpod: ^2.5.1
+  riverpod_generator: ^2.4.0
+
+  # Navigation & Routing
+  go_router: ^14.2.0
+
+  # Material Design 3
+  google_fonts: ^6.2.1
+  flutter_animate: ^4.5.0
+
+  # Local Storage & Security
+  flutter_secure_storage: ^9.2.2
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  shared_preferences: ^2.2.3
+
+  # Networking & API
+  dio: ^5.4.3+1
+  retrofit: ^4.1.0
+
+  # Serialization
+  json_serializable: ^6.8.0
+  json_annotation: ^4.9.0
+
+  # Image Handling
+  cached_network_image: ^3.3.1
+  image_picker: ^1.1.1
+
+  # Device & Platform
+  device_info_plus: ^10.1.0
+  package_info_plus: ^7.0.0
+  connectivity_plus: ^6.0.1
+
+  # Biometric Authentication
+  local_auth: ^2.3.0
+  local_auth_ios: ^1.1.3
+
+  # Health & Fitness Data
+  health: ^9.0.0
+  wear: ^0.4.0
+
+  # Analytics & Monitoring
+  sentry_flutter: ^7.95.0
+
+  # Accessibility & Localization
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.19.0
+
+  # UI & Components
+  flutter_svg: ^2.0.10+1
+  lottie: ^3.1.2
+  cupertino_icons: ^1.0.6
+  shimmer: ^3.0.0
+
+  # Utilities
+  equatable: ^2.0.5
+  get_it: ^7.6.4
+  logger: ^2.1.0
+  uuid: ^4.1.0
+  url_launcher: ^6.2.6
+
+  # Testing Utilities
+  mocktail: ^1.0.3
+  fake_cloud_firestore: ^2.5.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.0
+  build_runner: ^2.4.12
+  json_serializable: ^6.8.0
+  riverpod_generator: ^2.4.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/icons/
+    - assets/images/
+    - assets/animations/
+    - assets/fonts/
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Regular.ttf
+        - asset: assets/fonts/Inter-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Inter-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Inter-Bold.ttf
+          weight: 700
