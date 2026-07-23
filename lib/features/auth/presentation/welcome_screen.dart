@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -41,13 +42,13 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
               FilledButton.icon(
-                onPressed: () {},
+                onPressed: () => context.go('/create-account'),
                 icon: const Icon(Icons.rocket_launch_rounded),
                 label: const Text('Get Started'),
               ),
               const SizedBox(height: 12),
               OutlinedButton.icon(
-                onPressed: () {},
+                onPressed: () => context.go('/sign-in'),
                 icon: const Icon(Icons.login_rounded),
                 label: const Text('Sign In'),
               ),

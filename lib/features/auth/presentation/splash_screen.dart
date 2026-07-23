@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,6 +18,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1200));
     _fadeAnimation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
     _controller.forward();
+
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed && mounted) {
+        context.go('/welcome');
+      }
+    });
   }
 
   @override
