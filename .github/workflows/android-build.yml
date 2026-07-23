@@ -1,0 +1,67 @@
+name: Build Debug APK and Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  build-and-release:
+    name: Build Android debug APK and create Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cache Pub packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.yaml') }}
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'stable'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build debug APK
+        env:
+          JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
+        run: flutter build apk --debug --no-shrink
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: debug-${{ github.run_number }}
+          release_name: Debug Build ${{ github.run_number }}
+          body: "Automated debug build from workflow run ${{ github.run_id }}"
+          draft: false
+          prerelease: true
+
+      - name: Upload APK to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/app/outputs/flutter-apk/app-debug.apk
+          asset_name: holistq-debug.apk
+          asset_content_type: application/vnd.android.package-archive
+
+      - name: Upload debug APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: holistq-debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          retention-days: 7
