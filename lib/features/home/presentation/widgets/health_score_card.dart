@@ -20,7 +20,7 @@ class HealthScoreCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF10B981).withOpacity(0.15),
+                      color: const Color(0xFF10B981).withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(999),
                     ),
                     child: const Text('Excellent', style: TextStyle(color: Color(0xFF10B981), fontWeight: FontWeight.w600)),

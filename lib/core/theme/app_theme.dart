@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static ThemeData get lightTheme {
@@ -10,12 +9,12 @@ class AppTheme {
         brightness: Brightness.light,
       ),
       scaffoldBackgroundColor: const Color(0xFFFFFFFF),
-      textTheme: GoogleFonts.interTextTheme(),
+      textTheme: ThemeData.light().textTheme,
     );
 
     return base.copyWith(
       appBarTheme: const AppBarTheme(centerTitle: false),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 1,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       ),
@@ -23,9 +22,9 @@ class AppTheme {
         height: 72,
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
-            return GoogleFonts.inter(textStyle: const TextStyle(fontWeight: FontWeight.w600));
+            return const TextStyle(fontWeight: FontWeight.w600);
           }
-          return GoogleFonts.inter(textStyle: const TextStyle(fontWeight: FontWeight.w500));
+          return const TextStyle(fontWeight: FontWeight.w500);
         }),
       ),
     );
@@ -40,12 +39,12 @@ class AppTheme {
         brightness: Brightness.dark,
       ),
       scaffoldBackgroundColor: const Color(0xFF050816),
-      textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme),
+      textTheme: ThemeData.dark().textTheme,
     );
 
     return base.copyWith(
       appBarTheme: const AppBarTheme(centerTitle: false),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 1,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       ),
@@ -53,9 +52,9 @@ class AppTheme {
         height: 72,
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
-            return GoogleFonts.inter(textStyle: const TextStyle(fontWeight: FontWeight.w600));
+            return const TextStyle(fontWeight: FontWeight.w600);
           }
-          return GoogleFonts.inter(textStyle: const TextStyle(fontWeight: FontWeight.w500));
+          return const TextStyle(fontWeight: FontWeight.w500);
         }),
       ),
     );
