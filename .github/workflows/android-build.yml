@@ -1,71 +1,67 @@
-steps:
-  - name: Checkout repository
-    uses: actions/checkout@v4
+name: Android Debug Build
 
-  - name: Set up Java
-    uses: actions/setup-java@v4
-    with:
-      distribution: temurin
-      java-version: '17'
+on:
+  workflow_dispatch:
 
-  - name: Cache Pub packages
-    uses: actions/cache@v4
-    with:
-      path: |
-        ~/.pub-cache
-        ~/.pub-cache/bin
-      key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.yaml') }}
-      restore-keys: |
-        ${{ runner.os }}-pub-
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-  - name: Install system dependencies
-    run: |
-      sudo apt-get update
-      sudo apt-get install -y --no-install-recommends unzip xz-utils
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-  - name: Set up Flutter
-    uses: subosito/flutter-action@v2
-    with:
-      flutter-version: '3.10.5'
-      channel: stable
-      cache: true
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          java-package: jdk
 
-  - name: Verify Flutter
-    run: |
-      flutter --version
-      flutter doctor -v
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.8'
+          channel: stable
+          cache: true
 
-  - name: Install dependencies
-    run: flutter pub get
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends unzip xz-utils
 
-  - name: Build debug APK
-    run: flutter build apk --debug
+      - name: Set up Android SDK
+        run: |
+          export ANDROID_SDK_ROOT="$HOME/android-sdk"
+          export ANDROID_HOME="$HOME/android-sdk"
+          mkdir -p "$ANDROID_SDK_ROOT/cmdline-tools"
+          cd "$ANDROID_SDK_ROOT"
+          curl -fsSL https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -o cmdline-tools.zip
+          unzip -q cmdline-tools.zip -d "$ANDROID_SDK_ROOT"
+          mkdir -p "$ANDROID_SDK_ROOT/cmdline-tools/latest"
+          cp -r "$ANDROID_SDK_ROOT/cmdline-tools/"* "$ANDROID_SDK_ROOT/cmdline-tools/latest/" 2>/dev/null || true
+          yes | "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_SDK_ROOT" --licenses
+          "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_SDK_ROOT" "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+          echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> "$GITHUB_ENV"
 
-  - name: Create GitHub Release
-    id: create_release
-    uses: actions/create-release@v1
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    with:
-      tag_name: debug-${{ github.run_number }}
-      release_name: Debug Build ${{ github.run_number }}
-      body: Automated debug build from workflow run ${{ github.run_id }}
-      draft: false
-      prerelease: true
+      - name: Verify Flutter
+        run: |
+          flutter --version
+          flutter doctor -v
 
-  - name: Upload APK to Release
-    uses: actions/upload-release-asset@v1
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    with:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-      asset_path: build/app/outputs/flutter-apk/app-debug.apk
-      asset_name: holistq-debug.apk
-      asset_content_type: application/vnd.android.package-archive
+      - name: Install dependencies
+        run: flutter pub get
 
-  - name: Upload debug APK artifact
-    uses: actions/upload-artifact@v4
-    with:
-      name: holistq-debug-apk
-      path: build/app/outputs/flutter-apk/app-debug.apk
-      retention-days: 7
+      - name: Run tests
+        run: flutter test
+
+      - name: Build debug APK
+        run: flutter build apk --debug
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: holistq-debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          retention-days: 7
