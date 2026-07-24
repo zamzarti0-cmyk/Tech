@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_id": "holistq-global",
+    "project_number": "270783787432",
+    "storage_bucket": "holistq-global.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270783787432:android:1d15e2899a873408a2ad9d",
+        "android_client_info": {
+          "package_name": "com.holistq.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDriviyRc8gSzwvR2r6psWj2-wbOvtunNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

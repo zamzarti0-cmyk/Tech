@@ -1,4 +1,4 @@
-package com.example.holistq
+package com.holistq.app
 
 import io.flutter.embedding.android.FlutterActivity
 
